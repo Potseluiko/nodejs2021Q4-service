@@ -7,8 +7,8 @@ class Board {
     this.columns = columns;
   }
 
-  static toResponse(user) {
-    const { id, title, columns } = user;
+  static toResponse(board) {
+    const { id, title, columns } = board;
     return { id, title, columns };
   }
 }

@@ -31,6 +31,10 @@ fastify.register(require('./resources/boards/board.router'), {
   prefix: '/boards',
 });
 
+fastify.register(require('./resources/tasks/task.router'), {
+  prefix: '/boards/:boardId/tasks',
+});
+
 fastify.ready((err) => {
   if (err) {
     fastify.log.error(err);

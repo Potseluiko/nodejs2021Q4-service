@@ -11,10 +11,10 @@ fastify.register(swaggerUI, {
     deepLinking: false,
   },
   uiHooks: {
-    onRequest (request, reply, next) {
+    onRequest(request, reply, next) {
       next();
     },
-    preHandler (request, reply, next) {
+    preHandler(request, reply, next) {
       next();
     },
   },
@@ -25,6 +25,10 @@ fastify.register(swaggerUI, {
 
 fastify.register(require('./resources/users/user.router'), {
   prefix: '/users',
+});
+
+fastify.register(require('./resources/boards/board.router'), {
+  prefix: '/boards',
 });
 
 fastify.ready((err) => {

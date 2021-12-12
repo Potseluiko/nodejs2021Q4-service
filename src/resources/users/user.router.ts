@@ -22,7 +22,10 @@ module.exports = function userRouter(
   fastify.get(
     '/:id',
     { schema: { params: userIdSchema } },
-    async (request: FastifyRequest<any>, reply: FastifyReply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string } }>,
+      reply: FastifyReply
+    ) => {
       const user = await usersService.getById(request.params.id);
 
       if (user) {
@@ -46,7 +49,10 @@ module.exports = function userRouter(
   fastify.put(
     '/:id',
     { schema: { params: userIdSchema, body: userCreateSchema } },
-    async (request: FastifyRequest<any>, reply: FastifyReply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string } }>,
+      reply: FastifyReply
+    ) => {
       const user = await usersService.updateById(
         request.params.id,
         request.body
@@ -63,7 +69,10 @@ module.exports = function userRouter(
   fastify.delete(
     '/:id',
     { schema: { params: userIdSchema } },
-    async (request: FastifyRequest<any>, reply: FastifyReply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string } }>,
+      reply: FastifyReply
+    ) => {
       const data = await usersService.deleteById(request.params.id);
 
       if (data) {

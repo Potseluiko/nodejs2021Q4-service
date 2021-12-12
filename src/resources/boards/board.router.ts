@@ -1,9 +1,20 @@
+import {
+  FastifyInstance,
+  FastifyServerOptions,
+  FastifyRequest,
+  FastifyReply,
+} from 'fastify';
+
 const Board = require('./board.model');
 const boardService = require('./board.service');
 const { boardIdSchema, boardCreateSchema } = require('./board.schema');
 
-module.exports = function userRouter(fastify, opts, done) {
-  fastify.get('/', async (request, reply) => {
+module.exports = function userRouter(
+  fastify: FastifyInstance,
+  opts: FastifyServerOptions,
+  done: () => void
+) {
+  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const boards = await boardService.getAll();
     reply.send(boards.map(Board.toResponse));
   });
@@ -11,7 +22,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.get(
     '/:id',
     { schema: { params: boardIdSchema } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const board = await boardService.getById(request.params.id);
 
       if (board) {
@@ -25,7 +36,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.post(
     '/',
     { schema: { body: boardCreateSchema } },
-    async (request, reply) => {
+    async (request: FastifyRequest, reply: FastifyReply) => {
       const board = await boardService.create(request.body);
 
       reply.code(201).send(Board.toResponse(board));
@@ -35,7 +46,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.put(
     '/:id',
     { schema: { params: boardIdSchema, body: boardCreateSchema } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const board = await boardService.updateById(
         request.params.id,
         request.body
@@ -52,7 +63,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.delete(
     '/:id',
     { schema: { params: boardIdSchema } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const data = await boardService.deleteById(request.params.id);
 
       if (data) {

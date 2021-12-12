@@ -1,5 +1,3 @@
-const uuid = require('uuid');
-
 type IUser = {
   id: string;
   name: string;
@@ -12,12 +10,7 @@ class User {
   login: string;
   password: string;
 
-  constructor({
-    id = uuid(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd',
-  } = {}) {
+  constructor({ id = '', name = '', login = '', password = '' } = {}) {
     this.id = id;
     this.name = name;
     this.login = login;

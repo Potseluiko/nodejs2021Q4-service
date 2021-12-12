@@ -1,7 +1,7 @@
 const usersRepo = require('./user.memory.repository');
 const tasksRepo = require('../tasks/task.memory.repository');
 
-type ITask = {
+type ITask2 = {
   id: string;
   userId: string;
 };
@@ -21,8 +21,8 @@ module.exports = {
 
     await Promise.all(
       tasks
-        .filter((task: ITask) => task.userId === userId)
-        .map((task: ITask) => tasksRepo.updateById(task.id, { userId: null }))
+        .filter((task: ITask2) => task.userId === userId)
+        .map((task: ITask2) => tasksRepo.updateById(task.id, { userId: null }))
     );
 
     return usersRepo.deleteById(userId);

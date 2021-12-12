@@ -1,13 +1,24 @@
+import {
+  FastifyInstance,
+  FastifyServerOptions,
+  FastifyRequest,
+  FastifyReply,
+} from 'fastify';
+
 const Task = require('./task.model');
 const boardService = require('../boards/board.service');
 const taskService = require('./task.service');
 const { taskSchema1, taskSchema2, taskSchema3 } = require('./task.schema');
 
-module.exports = function userRouter(fastify, opts, done) {
+module.exports = function userRouter(
+  fastify: FastifyInstance,
+  opts: FastifyServerOptions,
+  done: () => void
+) {
   fastify.get(
     '/',
     { schema: { params: taskSchema1 } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const { boardId } = request.params;
       const board = await boardService.getById(boardId);
 
@@ -23,7 +34,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.get(
     '/:taskId',
     { schema: { params: taskSchema3 } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const { boardId, taskId } = request.params;
       const board = await boardService.getById(boardId);
 
@@ -44,7 +55,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.post(
     '/',
     { schema: { params: taskSchema1, body: taskSchema2 } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const { boardId } = request.params;
       const board = await boardService.getById(boardId);
 
@@ -60,7 +71,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.put(
     '/:taskId',
     { schema: { params: taskSchema3, body: taskSchema2 } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const { boardId, taskId } = request.params;
       const board = await boardService.getById(boardId);
 
@@ -84,7 +95,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.delete(
     '/:taskId',
     { schema: { params: taskSchema3 } },
-    async (request, reply) => {
+    async (request: FastifyRequest<any>, reply: FastifyReply) => {
       const { boardId, taskId } = request.params;
       const board = await boardService.getById(boardId);
 

@@ -6,8 +6,11 @@ type IUser = {
 
 class User {
   id: string;
+
   name: string;
+
   login: string;
+
   password: string;
 
   constructor({ id = '', name = '', login = '', password = '' } = {}) {
@@ -23,4 +26,4 @@ class User {
   }
 }
 
-module.exports = User;
+export default User;

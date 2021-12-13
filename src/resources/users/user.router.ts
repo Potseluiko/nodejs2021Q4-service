@@ -5,18 +5,24 @@ import {
   FastifyReply,
 } from 'fastify';
 
-const User = require('./user.model');
-const usersService = require('./user.service');
-const { userIdSchema, userCreateSchema } = require('./user.schema');
+import User from './user.model';
+import usersService from './user.service';
+import { userIdSchema, userCreateSchema } from './user.schema';
 
-module.exports = function userRouter(
+type IUser = {
+  id: string;
+  name: string;
+  login: string;
+};
+
+export default function userRouter(
   fastify: FastifyInstance,
   opts: FastifyServerOptions,
   done: () => void
 ) {
   fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const users = await usersService.getAll();
-    reply.send(users.map(User.toResponse));
+    reply.send(users.map((data) => User.toResponse(data)));
   });
 
   fastify.get(
@@ -39,7 +45,7 @@ module.exports = function userRouter(
   fastify.post(
     '/',
     { schema: { body: userCreateSchema } },
-    async (request: FastifyRequest, reply: FastifyReply) => {
+    async (request: FastifyRequest<{ Body: IUser }>, reply: FastifyReply) => {
       const user = await usersService.create(request.body);
 
       reply.code(201).send(User.toResponse(user));
@@ -50,7 +56,7 @@ module.exports = function userRouter(
     '/:id',
     { schema: { params: userIdSchema, body: userCreateSchema } },
     async (
-      request: FastifyRequest<{ Params: { id: string } }>,
+      request: FastifyRequest<{ Params: { id: string }; Body: object }>,
       reply: FastifyReply
     ) => {
       const user = await usersService.updateById(
@@ -84,4 +90,4 @@ module.exports = function userRouter(
   );
 
   done();
-};
+}

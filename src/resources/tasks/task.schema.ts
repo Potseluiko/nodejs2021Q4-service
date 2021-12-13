@@ -1,11 +1,11 @@
-const taskSchema1 = {
+export const taskSchema1 = {
   type: 'object',
   properties: {
     boardId: { type: 'string', format: 'uuid' },
   },
 };
 
-const taskSchema3 = {
+export const taskSchema3 = {
   type: 'object',
   properties: {
     boardId: { type: 'string', format: 'uuid' },
@@ -13,7 +13,7 @@ const taskSchema3 = {
   },
 };
 
-const taskSchema2 = {
+export const taskSchema2 = {
   type: 'object',
   required: ['title'],
   properties: {
@@ -36,10 +36,4 @@ const taskSchema2 = {
       type: ['string', 'null'],
     },
   },
-};
-
-module.exports = {
-  taskSchema1,
-  taskSchema2,
-  taskSchema3,
 };

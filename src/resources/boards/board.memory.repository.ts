@@ -1,6 +1,12 @@
-import { v4 } from 'uuid';
+import * as uuid from 'uuid';
 
-const records: Record<string, object> = {};
+type IBoard = {
+  id: string;
+  title: string;
+  columns: object[];
+};
+
+const records: Record<string, IBoard> = {};
 
 const getAll = async () => Object.values(records);
 
@@ -12,12 +18,14 @@ const getById = async (id: string) => {
   return records[id];
 };
 
-const create = (data: object) => {
-  const id = v4();
+const create = (data: IBoard) => {
+  const id = uuid.v4();
+  const { title, columns } = data;
 
   records[id] = {
-    ...(data || {}),
     id,
+    title,
+    columns,
   };
 
   return records[id];
@@ -47,4 +55,4 @@ const deleteById = (id: string) => {
   return { id };
 };
 
-module.exports = { getAll, getById, create, updateById, deleteById };
+export default { getAll, getById, create, updateById, deleteById };

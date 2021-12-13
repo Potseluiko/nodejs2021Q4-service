@@ -1,6 +1,12 @@
-import { v4 } from 'uuid';
+import * as uuid from 'uuid';
 
-const records: Record<string, object> = {};
+type IUser = {
+  id: string;
+  name: string;
+  login: string;
+};
+
+const records: Record<string, IUser> = {};
 
 const getAll = async () => Object.values(records);
 
@@ -12,11 +18,13 @@ const getById = async (id: string) => {
   return records[id];
 };
 
-const create = (data: object) => {
-  const id = v4();
+const create = (data: IUser) => {
+  const id = uuid.v4();
+  const { name, login } = data;
 
   records[id] = {
-    ...(data || {}),
+    name,
+    login,
     id,
   };
 
@@ -47,4 +55,4 @@ const deleteById = (id: string) => {
   return { id };
 };
 
-module.exports = { getAll, getById, create, updateById, deleteById };
+export default { getAll, getById, create, updateById, deleteById };

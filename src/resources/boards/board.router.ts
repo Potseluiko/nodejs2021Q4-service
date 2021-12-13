@@ -5,18 +5,24 @@ import {
   FastifyReply,
 } from 'fastify';
 
-const Board = require('./board.model');
-const boardService = require('./board.service');
-const { boardIdSchema, boardCreateSchema } = require('./board.schema');
+import Board from './board.model';
+import boardService from './board.service';
+import { boardIdSchema, boardCreateSchema } from './board.schema';
 
-module.exports = function userRouter(
+type IBoard = {
+  id: string;
+  title: string;
+  columns: object[];
+};
+
+export default function userRouter(
   fastify: FastifyInstance,
   opts: FastifyServerOptions,
   done: () => void
 ) {
   fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const boards = await boardService.getAll();
-    reply.send(boards.map(Board.toResponse));
+    reply.send(boards.map((data) => Board.toResponse(data)));
   });
 
   fastify.get(
@@ -39,7 +45,7 @@ module.exports = function userRouter(
   fastify.post(
     '/',
     { schema: { body: boardCreateSchema } },
-    async (request: FastifyRequest, reply: FastifyReply) => {
+    async (request: FastifyRequest<{ Body: IBoard }>, reply: FastifyReply) => {
       const board = await boardService.create(request.body);
 
       reply.code(201).send(Board.toResponse(board));
@@ -50,7 +56,7 @@ module.exports = function userRouter(
     '/:id',
     { schema: { params: boardIdSchema, body: boardCreateSchema } },
     async (
-      request: FastifyRequest<{ Params: { id: string } }>,
+      request: FastifyRequest<{ Params: { id: string }; Body: object }>,
       reply: FastifyReply
     ) => {
       const board = await boardService.updateById(
@@ -84,4 +90,4 @@ module.exports = function userRouter(
   );
 
   done();
-};
+}

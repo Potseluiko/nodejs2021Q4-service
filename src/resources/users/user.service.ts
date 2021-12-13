@@ -1,17 +1,23 @@
-const usersRepo = require('./user.memory.repository');
-const tasksRepo = require('../tasks/task.memory.repository');
+import usersRepo from './user.memory.repository';
+import tasksRepo from '../tasks/task.memory.repository';
+
+type IUser = {
+  id: string;
+  name: string;
+  login: string;
+};
 
 type ITask2 = {
   id: string;
   userId: string;
 };
 
-module.exports = {
+export default {
   getAll: () => usersRepo.getAll(),
 
   getById: (userId: string) => usersRepo.getById(userId),
 
-  create: (data: object) => usersRepo.create(data),
+  create: (data: IUser) => usersRepo.create(data),
 
   updateById: (userId: string, data: object) =>
     usersRepo.updateById(userId, data),

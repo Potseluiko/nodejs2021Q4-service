@@ -1,11 +1,17 @@
-const boardRepo = require('./board.memory.repository');
+import boardRepo from './board.memory.repository';
 
-module.exports = {
+type IBoard = {
+  id: string;
+  title: string;
+  columns: object[];
+};
+
+export default {
   getAll: () => boardRepo.getAll(),
 
   getById: (id: string) => boardRepo.getById(id),
 
-  create: (data: object) => boardRepo.create(data),
+  create: (data: IBoard) => boardRepo.create(data),
 
   updateById: (id: string, data: object) => boardRepo.updateById(id, data),
 

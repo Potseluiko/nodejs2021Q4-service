@@ -4,9 +4,11 @@ type IBoard = {
   columns: object[];
 };
 
-class BoardModel {
+class Board {
   id: string;
+
   title: string;
+
   columns: object[];
 
   constructor({ id = '', title = '', columns = [] } = {}) {
@@ -21,4 +23,4 @@ class BoardModel {
   }
 }
 
-module.exports = BoardModel;
+export default Board;

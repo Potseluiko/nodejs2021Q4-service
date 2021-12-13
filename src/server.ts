@@ -1,7 +1,7 @@
-const { PORT } = require('./common/config');
-const fastify = require('./app');
+import { PORT } from './common/config';
+import fastify from './app';
 
-fastify.listen(PORT, (err: string, address: string) => {
+fastify.listen(PORT, (err, address) => {
   console.log(`App is running on ${address}`);
 
   if (err) {

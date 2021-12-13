@@ -8,13 +8,19 @@ type ITask = {
   columnId: string;
 };
 
-class TaskModel {
+class Task {
   id: string;
+
   title: string;
+
   description: string;
+
   order: number;
+
   userId: string;
+
   boardId: string;
+
   columnId: string;
 
   constructor({
@@ -41,4 +47,4 @@ class TaskModel {
   }
 }
 
-module.exports = TaskModel;
+export default Task;

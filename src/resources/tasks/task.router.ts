@@ -5,12 +5,22 @@ import {
   FastifyReply,
 } from 'fastify';
 
-const Task = require('./task.model');
-const boardService = require('../boards/board.service');
-const taskService = require('./task.service');
-const { taskSchema1, taskSchema2, taskSchema3 } = require('./task.schema');
+import Task from './task.model';
+import boardService from '../boards/board.service';
+import taskService from './task.service';
+import { taskSchema1, taskSchema2, taskSchema3 } from './task.schema';
 
-module.exports = function userRouter(
+type ITask = {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+  userId: string;
+  boardId: string;
+  columnId: string;
+};
+
+export default function userRouter(
   fastify: FastifyInstance,
   opts: FastifyServerOptions,
   done: () => void
@@ -62,7 +72,7 @@ module.exports = function userRouter(
     '/',
     { schema: { params: taskSchema1, body: taskSchema2 } },
     async (
-      request: FastifyRequest<{ Params: { boardId: string }; Body: {} }>,
+      request: FastifyRequest<{ Params: { boardId: string }; Body: ITask }>,
       reply: FastifyReply
     ) => {
       const { boardId } = request.params;
@@ -132,4 +142,4 @@ module.exports = function userRouter(
   );
 
   done();
-};
+}

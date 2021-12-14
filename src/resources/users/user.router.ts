@@ -1,17 +1,37 @@
-const User = require('./user.model');
-const usersService = require('./user.service');
-const { userIdSchema, userCreateSchema } = require('./user.schema');
+import {
+  FastifyInstance,
+  FastifyServerOptions,
+  FastifyRequest,
+  FastifyReply,
+} from 'fastify';
 
-module.exports = function userRouter(fastify, opts, done) {
-  fastify.get('/', async (request, reply) => {
+import User from './user.model';
+import usersService from './user.service';
+import { userIdSchema, userCreateSchema } from './user.schema';
+
+type IUser = {
+  id: string;
+  name: string;
+  login: string;
+};
+
+export default function userRouter(
+  fastify: FastifyInstance,
+  opts: FastifyServerOptions,
+  done: () => void
+) {
+  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const users = await usersService.getAll();
-    reply.send(users.map(User.toResponse));
+    reply.send(users.map((data) => User.toResponse(data)));
   });
 
   fastify.get(
     '/:id',
     { schema: { params: userIdSchema } },
-    async (request, reply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string } }>,
+      reply: FastifyReply
+    ) => {
       const user = await usersService.getById(request.params.id);
 
       if (user) {
@@ -25,7 +45,7 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.post(
     '/',
     { schema: { body: userCreateSchema } },
-    async (request, reply) => {
+    async (request: FastifyRequest<{ Body: IUser }>, reply: FastifyReply) => {
       const user = await usersService.create(request.body);
 
       reply.code(201).send(User.toResponse(user));
@@ -35,7 +55,10 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.put(
     '/:id',
     { schema: { params: userIdSchema, body: userCreateSchema } },
-    async (request, reply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string }; Body: object }>,
+      reply: FastifyReply
+    ) => {
       const user = await usersService.updateById(
         request.params.id,
         request.body
@@ -52,7 +75,10 @@ module.exports = function userRouter(fastify, opts, done) {
   fastify.delete(
     '/:id',
     { schema: { params: userIdSchema } },
-    async (request, reply) => {
+    async (
+      request: FastifyRequest<{ Params: { id: string } }>,
+      reply: FastifyReply
+    ) => {
       const data = await usersService.deleteById(request.params.id);
 
       if (data) {
@@ -64,4 +90,4 @@ module.exports = function userRouter(fastify, opts, done) {
   );
 
   done();
-};
+}

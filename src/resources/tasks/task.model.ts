@@ -1,14 +1,36 @@
-const uuid = require('uuid');
+type ITask = {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+  userId: string;
+  boardId: string;
+  columnId: string;
+};
 
 class Task {
+  id: string;
+
+  title: string;
+
+  description: string;
+
+  order: number;
+
+  userId: string;
+
+  boardId: string;
+
+  columnId: string;
+
   constructor({
-    id = uuid(),
-    title = 'TASK',
+    id = '',
+    title = '',
     description = '',
     order = 0,
-    userId = null,
-    boardId = null,
-    columnId = null,
+    userId = '',
+    boardId = '',
+    columnId = '',
   } = {}) {
     this.id = id;
     this.title = title;
@@ -19,10 +41,10 @@ class Task {
     this.columnId = columnId;
   }
 
-  static toResponse(task) {
+  static toResponse(task: ITask) {
     const { id, title, description, order, userId, boardId, columnId } = task;
     return { id, title, description, order, userId, boardId, columnId };
   }
 }
 
-module.exports = Task;
+export default Task;

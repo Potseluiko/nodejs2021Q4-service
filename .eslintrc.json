@@ -1,11 +1,12 @@
 {
   "root": true,
   "env": {
-    "es2020": true,
+    "es2021": true,
     "jasmine": true,
     "jest": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2021,
@@ -18,15 +19,19 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:node/recommended",
-    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
     "prettier"
+  ],
+  "plugins": [
+    "@typescript-eslint"
   ],
   "rules": {
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
+

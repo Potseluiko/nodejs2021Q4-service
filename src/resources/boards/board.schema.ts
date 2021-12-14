@@ -1,4 +1,4 @@
-const boardCreateSchema = {
+export const boardCreateSchema = {
   type: 'object',
   required: ['title', 'columns'],
   properties: {
@@ -11,14 +11,9 @@ const boardCreateSchema = {
   },
 };
 
-const boarIdSchema = {
+export const boardIdSchema = {
   type: 'object',
   properties: {
     id: { type: 'string', format: 'uuid' },
   },
-};
-
-module.exports = {
-  boardCreateSchema,
-  boarIdSchema,
 };

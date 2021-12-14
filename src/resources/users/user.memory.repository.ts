@@ -1,10 +1,16 @@
-const uuid = require('uuid');
+import * as uuid from 'uuid';
 
-const records = {};
+type IUser = {
+  id: string;
+  name: string;
+  login: string;
+};
+
+const records: Record<string, IUser> = {};
 
 const getAll = async () => Object.values(records);
 
-const getById = async (id) => {
+const getById = async (id: string) => {
   if (!id || !records[id]) {
     return null;
   }
@@ -12,18 +18,20 @@ const getById = async (id) => {
   return records[id];
 };
 
-const create = (data) => {
+const create = (data: IUser) => {
   const id = uuid.v4();
+  const { name, login } = data;
 
   records[id] = {
-    ...(data || {}),
+    name,
+    login,
     id,
   };
 
   return records[id];
 };
 
-const updateById = (id, data) => {
+const updateById = (id: string, data: object) => {
   if (!id || !records[id]) {
     return null;
   }
@@ -37,7 +45,7 @@ const updateById = (id, data) => {
   return records[id];
 };
 
-const deleteById = (id) => {
+const deleteById = (id: string) => {
   if (!id || !records[id]) {
     return null;
   }
@@ -47,4 +55,4 @@ const deleteById = (id) => {
   return { id };
 };
 
-module.exports = { getAll, getById, create, updateById, deleteById };
+export default { getAll, getById, create, updateById, deleteById };

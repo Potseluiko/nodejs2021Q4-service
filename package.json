@@ -5,7 +5,6 @@
     "type": "git",
     "url": ""
   },
-  "type": "commonjs",
   "description": "REST service starter for RS School",
   "main": "src/server.ts",
   "scripts": {
@@ -54,10 +53,12 @@
   "devDependencies": {
     "@types/node": "^16.11.12",
     "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "chai": "4.3.4",
     "debug": "4.3.2",
     "dirty-chai": "2.0.1",
-    "eslint": "8.2.0",
+    "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.3",

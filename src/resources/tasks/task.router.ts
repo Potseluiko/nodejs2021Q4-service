@@ -93,7 +93,7 @@ export default function userRouter(
     async (
       request: FastifyRequest<{
         Params: { boardId: string; taskId: string };
-        Body: {};
+        Body: object;
       }>,
       reply: FastifyReply
     ) => {
